@@ -20,54 +20,65 @@
 
 # We will need to different classes: One for cars and the other for the garage.
 
-class Car():
-    def __init__(self, make, model, year, color, plate):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.color = color
-        self.plate = plate
-
-
 class Garage():
-    def __init__(self, cars_added, spots, car_info, ticket):
-        self.cars_added = []
-        self.spots = 8
-        self.car_info = {}
-        self.ticket = 0
+    def __init__(self, ticket, spots ,myTicket):
+        self.ticket = ticket
+        self.spots = spots
+        self.myTicket = myTicket
 
+    # def spots_available(self):
+    #     return self.spots
 
-# This should print out the amount of spots availiable?
+    def available_Ticket(self):
+        if len(self.ticket) == 0:
+            print('There are no more tickets available.')
+        else:
+            available_spot = self.ticket.pop(0)
+            print(f"Park in space {available_spot}")
+            self.spots.append(available_spot)
+            self.myTicket[available_spot] = "unpaid"
+            if self.myTicket == {}:
+                return
+            else:
+                print(self.myTicket)
 
-    def spots(self):
-        return self.spots
+    def pay(self):
 
-# when a car is added it should ask for the things defined in the Car class created.
+        available_spot = input('What spot were you in? ')
 
+        if self.myTicket[available_spot] == 'unpaid':
+            pay = input('Type pay to pay')
+            if pay == 'pay':
+                self.myTicket[available_spot] = 'paid'
+                print('Ticket has been paid, you have 15 minutes to leave.')
+        else:
+            print('Please enter payment of $5')
 
-def add_car(self, car):
+    def remove_car(self):
+        leave = input('If leaving, enter parking spot. ')
+        if self.myTicket[leave] == 'paid':
+            self.spots.remove(leave)
+            self.ticket.append(leave)
+            self.ticket.sort()
+            del self.myTicket[leave]
+        else: 
+            return self.pay
+parking_spots = ['A1', 'B2', 'C3', 'D4', 'E5', 'F6', 'G7', 'H8']
 
-    # Had to ask a buddy how to set this up, going to do only 8 spots, each needs a letter and a number to work.  no symbols or special characters.
-    self.identifier = ['A1', 'B2', 'C3', 'D4', 'E5', 'F6', 'G7', 'H8']
+terry_chet_parking = Garage(parking_spots, [], {})
 
-    if self.spots > 0:
-        self.cars_added.append(str(car).split(', '))
-
-    # This should lower the amount of spots we have when cars are added.
-        self.spot -= 1
-
-    # here is where we define the car_info into a dictionary.  This will let store the info we need.
-        self.car_info = {'ticket': [], 'make': [],
-                         'model': [], 'year': [], 'color': [], 'plate': []}
-
-# Here we are adding the cars to our list and should be storing the desctriptions in the dictionary.
-    for index, i in enumerate(self.cars_added):
-        self.car_info['ticket'].append(self.indetifier[index])
-        self.car_infor['make'].append(i[0])
-        self.car_infor['model'].append(i[1])
-        self.car_infor['year'].append(i[2])
-        self.car_infor['color'].append(i[3])
-        self.car_infor['plate'].append(i[4])
-    return "Your car is now under our care."
-
-
+def Garage():
+    while True:
+        Welcome = input('Welcome. Would you like to park, pay, leave, or quit? ')
+        if Welcome == 'park':
+            terry_chet_parking.available_Ticket()
+        elif Welcome == 'pay':
+            terry_chet_parking.pay()
+        elif Welcome == 'leave':
+            terry_chet_parking.remove_car()
+        elif Welcome == 'quit':
+            break
+        else:
+            print('Please enter park, pay, leave, or quit. ')
+    
+Garage()
